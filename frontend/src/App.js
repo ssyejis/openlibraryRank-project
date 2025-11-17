@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import ProjectList from './components/ProjectList';
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
 function App() {
   const [tags, setTags] = useState([]);
@@ -44,7 +45,7 @@ function TagInput({ onAdd, onSearch }) {
     if (!v) return;
     setChecking(true);
     setMessage('');
-    axios.get('http://localhost:5001/api/projects', { params: { q: v, per_page: 1, all: false } })
+    axios.get(`${API_BASE}/api/projects`, { params: { q: v, per_page: 1, all: false } })
       .then(res => {
         const data = Array.isArray(res.data) ? res.data : (res.data.items || res.data.projects || []);
         if (data && data.length > 0) {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 import axios from 'axios';
 
 const normalize = (r) => {
@@ -44,7 +45,7 @@ const ProjectList = ({ tags = [], query = '' }) => {
         // cap page to 10
         const reqPage = Math.min(page, 10);
         if (!tags || tags.length === 0) {
-          const resp = await axios.get('http://localhost:5001/api/projects', { params: { q: query || '', per_page: pageSize, page: reqPage, all: false } });
+          const resp = await axios.get(`${API_BASE}/api/projects`, { params: { q: query || '', per_page: pageSize, page: reqPage, all: false } });
           const data = resp.data && Array.isArray(resp.data.items) ? resp.data.items : (Array.isArray(resp.data) ? resp.data : []);
           const totalRaw = resp.data && typeof resp.data.total_count === 'number' ? resp.data.total_count : data.length;
           const total = Math.min(totalRaw, 100);
@@ -58,7 +59,7 @@ const ProjectList = ({ tags = [], query = '' }) => {
         }
 
         const tagsParam = tags.join(',');
-        const resp = await axios.get('http://localhost:5001/api/projects', { params: { tags: tagsParam, per_page: pageSize, page: reqPage, all: false } });
+        const resp = await axios.get(`${API_BASE}/api/projects`, { params: { tags: tagsParam, per_page: pageSize, page: reqPage, all: false } });
         const data = resp.data && Array.isArray(resp.data.items) ? resp.data.items : (Array.isArray(resp.data) ? resp.data : []);
         const totalRaw = resp.data && typeof resp.data.total_count === 'number' ? resp.data.total_count : data.length;
         const total = Math.min(totalRaw, 100);
