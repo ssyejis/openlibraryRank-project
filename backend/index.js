@@ -4,12 +4,9 @@ const cors = require('cors');
 const app = express();
 const PORT = 5001;
 
-// Configure CORS to allow the frontend origin(s).
-// You can set ALLOWED_ORIGINS as a comma-separated env var (e.g. "https://ssyejis.github.io,http://localhost:3000").
 const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:3000', 'https://ssyejis.github.io'];
 const corsOptions = {
   origin: function(origin, callback) {
-    // allow requests with no origin (e.g. mobile apps, curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
     return callback(new Error('Not allowed by CORS'));

@@ -42,7 +42,6 @@ const ProjectList = ({ tags = [], query = '' }) => {
       setLoading(true);
       setError(null);
       try {
-        // cap page to 10
         const reqPage = Math.min(page, 10);
         if (!tags || tags.length === 0) {
           const resp = await axios.get(`${API_BASE}/api/projects`, { params: { q: query || '', per_page: pageSize, page: reqPage, all: false } });
@@ -112,7 +111,6 @@ const ProjectList = ({ tags = [], query = '' }) => {
   );
 };
 
-  // Simple CSS spinner
   function Spinner({ size = 40 }) {
     const style = {
       width: size,
